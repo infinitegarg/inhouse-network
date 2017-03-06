@@ -1,0 +1,26 @@
+{
+  "name": "gulp-boilerplate",
+  "version": "1.0.0",
+  "description": "Gulp boilerplate with browserify and sass",
+  "main": "main.js",
+  "scripts": {
+    "start": "gulp"
+  },
+  "author": "Jesper Orb",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.7.6",
+    "babel-preset-env": "^1.2.0",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.8",
+    "browserify": "^14.1.0",
+    "cssnano": "^3.10.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-postcss": "^6.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-util": "^3.0.8",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
