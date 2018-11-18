@@ -229,24 +229,31 @@ function renderGraph(graph) {
           .on("drag", dragged)
           .on("end", dragended));
 
-  var lables = node.append("text")
-      .text(function(d) {
-        return d.id;
-      })
-      .attr('x', function(d) {
-				if (d.nodeType == "skill")
-					return ((d.value * 4)+12);
-				else
-				return 12;
-			})
-      .attr('y', function(d) {
-				if(d.nodeType == "skill")
-					return 7;
-				else
-					return 4;
-			})
-			.attr('fill', 'white')
-			.attr('class', 'text-label');
+					var lables = node.append("text")
+				      .text(function(d) {
+				        return d.id;
+				      })
+							.attr("text-anchor", "middle")
+				      .attr('y', function(d) {
+								if(d.nodeType == "skill")
+									return 7;
+								else
+									return 20;
+							})
+							.attr('fill', function(d) {
+								if(d.nodeType == "skill")
+									return "#7F1ADA";
+								else
+									return 'white';
+							})
+							.attr('class', function(d) {
+								if(d.nodeType == "skill")
+									return "skill-text text-label";
+								else
+									return "text-label";
+							})
+							// .attr('class', 'text-label');
+
 
   node.append("title")
       .text(function(d) { return d.id; });
