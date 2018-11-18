@@ -42,7 +42,7 @@ text {
 		<div class="cta-heading">Hey Everyone!</div>
 			<div>Want to connect with similar-minded people at the Hackathon?
 			<br><br>Fill up the form below to discover them</div>
-		<a href="#" target="_blank">Let's Connect</a>
+		<a href="https://goo.gl/forms/XDis5G7jwmx6Rjn43" target="_blank">Let's Connect</a>
 	</div>
 	<div class="guide">
 		<div class="heading">Guide</div>
@@ -80,13 +80,13 @@ function attachEvents() {
 				 	console.log(response);
 					var a = response.data;
 						Object.keys(a).forEach(key => {
-						var obj1 = {source: a[key].name, target: a[key].goodat, knows: true};
-						let obj2 = {source: a[key].name, target: a[key].wanttolearn, learn: true};
-						meta[a[key].wanttolearn] = meta[a[key].wanttolearn] ? meta[a[key].wanttolearn] + 1 : 1;
-						meta[a[key].goodat] = meta[a[key].goodat] ? meta[a[key].goodat] + 1 : 1;
+						var obj1 = {source: a[key].name, target: a[key].youreawesomeat, knows: true};
+						let obj2 = {source: a[key].name, target: a[key].aspiringtolearn, learn: true};
+						meta[a[key].aspiringtolearn] = meta[a[key].aspiringtolearn] ? meta[a[key].aspiringtolearn] + 1 : 1;
+						meta[a[key].youreawesomeat] = meta[a[key].youreawesomeat] ? meta[a[key].youreawesomeat] + 1 : 1;
 						links.push(obj1);
 						links.push(obj2);
-						nodes.push({id: a[key].name, knows: a[key].goodat,learn: a[key].wanttolearn, inhouse:a[key].inhouse,desknumber:a[key].desknumber, nodeType: 'user', value: 1});
+						nodes.push({id: a[key].name, knows: a[key].youreawesomeat,learn: a[key].aspiringtolearn, areyouaninnovacceremployee:a[key].areyouaninnovacceremployee,desknumber:a[key].desknumber, nodeType: 'user', value: 1});
 						})
 						Object.keys(meta).forEach(key => {
 							tempList.push({id: key, value: meta[key], nodeType: 'skill'})
@@ -201,7 +201,7 @@ function renderGraph(graph) {
       .attr("fill", function(d) {
 				if (d.nodeType == "skill")
 					return "white";
-				else if(d.inhouse == "Yup")
+				else if(d.areyouaninnovacceremployee == "Yup")
 					return "#d93737";
 				else
 				 	return "#feaf0e";
@@ -213,7 +213,7 @@ function renderGraph(graph) {
 					return "node-user"
 			})
 			.attr('stroke', function(d) {
-				if(d.inhouse == "Yup")
+				if(d.areyouaninnovacceremployee == "Yup")
 					return "#fff";
 				else {
 					return "none";
