@@ -2,13 +2,282 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Gulp Boilerplate</title>
+	<title>Let's Connect</title>
 	<link rel="stylesheet" type="text/css" href="dist/css/main.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="dist/favicon.png">
 </head>
 <body>
-  <h1>Gulp</h1>
-  <script src="dist/js/bundle.js"></script>
+
+<style>
+
+.links line {
+  /* stroke: #999; */
+  stroke-opacity: 0.7;
+}
+
+.nodes circle {
+}
+
+text {
+  font-size: 12px;
+	color: white;
+}
+
+</style>
+
+
+<div class="logo">
+	<img class="hacker" src="src/hacker-camp-logo.svg">
+	<img class="inno" src="src/logo-innovaccer-full-white.svg">
+</div>
+
+
+<div class="svg-container">
+	<svg width="960" height="700"></svg>
+</div>
+
+
+	<div class="cta">
+		<div class="cta-heading">Hey Everyone!</div>
+			<div>Want to connect with similar-minded people at the Hackathon?
+			<br><br>Fill up the form below to discover them</div>
+		<a href="#" target="_blank">Let's Connect</a>
+	</div>
+	<div class="guide">
+		<div class="heading">Guide</div>
+		<img src="src/guide.svg">
+		<div style="margin-bottom: 12px;margin-top: 16px;">- Dotted Line represents aspiration to learn a skill</div>
+		<div style="margin-bottom: 12px;">- Solid Line represents expertise in a skill</div>
+		<div style="margin-bottom: 12px;">- Drag the nodes to play around and discover people</div>
+		<div style="margin-bottom: 12px;">- Click on node to find the person's desk</div>
+		<div>P.S. You might want to refresh the page to see yourself after filling the form</div>
+	</div>
+
+
+
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script src="src/js/getsheetdone.js"></script>
+<script>
+const key = "15reMaz5Doyfg8G9ZODPoqC5sNEwKEtytXFbwFWsUlHo";
+const sheetNum = "1";
+var nodes = [];
+var links = [];
+var meta = {};
+var tempList = [];
+var graphData = {links: [], nodes: []};
+
+attachEvents();
+function attachEvents() {
+			 console.log(key);
+			 let promise;
+			 promise = GetSheetDone.labeledColsRows(key, sheetNum);
+
+			 promise.then((response) => {
+				 	console.log(response);
+					var a = response.data;
+						Object.keys(a).forEach(key => {
+						var obj1 = {source: a[key].name, target: a[key].goodat, knows: true};
+						let obj2 = {source: a[key].name, target: a[key].wanttolearn, learn: true};
+						meta[a[key].wanttolearn] = meta[a[key].wanttolearn] ? meta[a[key].wanttolearn] + 1 : 1;
+						meta[a[key].goodat] = meta[a[key].goodat] ? meta[a[key].goodat] + 1 : 1;
+						links.push(obj1);
+						links.push(obj2);
+						nodes.push({id: a[key].name, knows: a[key].goodat,learn: a[key].wanttolearn, inhouse:a[key].inhouse,desknumber:a[key].desknumber, nodeType: 'user', value: 1});
+						})
+						Object.keys(meta).forEach(key => {
+							tempList.push({id: key, value: meta[key], nodeType: 'skill'})
+						});
+						nodes = nodes.concat(tempList);
+						graphData.nodes = nodes;
+						graphData.links = links;
+						renderGraph(graphData);
+			 }).catch(err => {
+					 console.log('Error');
+					 console.log(err);
+					 $output.innerHTML = err.message;
+			 })
+
+}
+
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().distance(160).id(function(d) { return d.id; }))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height / 2));
+
+function dragstarted(d) {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+}
+
+function dragended(d) {
+  if (!d3.event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
+
+function renderGraph(graph) {
+	var link = svg.append("g")
+      .attr("class", "links")
+    .selectAll("line")
+    .data(graph.links)
+    .enter().append("line")
+      .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
+			.attr("stroke", 'white')
+			.attr("stroke-dasharray", function(d) {
+				if (d.learn) {
+					return "4"
+				}
+				else {
+					return "0"
+				}
+			});
+
+  var node = svg.append("g")
+      .attr("class", "nodes")
+    .selectAll("g")
+    .data(graph.nodes)
+		.attr('x', function(d) {
+			return d.x + 30;
+		})
+		.attr('y', function(d) {
+			return d.y + 30;
+		})
+    .enter().append("g")
+
+
+
+		var tip;
+	  node.on("click", function(d){
+	    if (tip) tip.remove();
+
+			setTimeout(function () {
+				tip.remove();
+			}, 3000);
+
+	    tip  = svg.append("g")
+	      .attr("transform", "translate(" + d.x  + "," + d.y + ")");
+
+	    var rect = tip.append("rect")
+	      .style("fill", "white")
+	      .style("opacity", ".7");
+
+	    tip.append("text")
+	      .text("Desk: " + d.desknumber)
+	      .attr("dy", "1em")
+	      .attr("x", 8)
+				.attr("y", 6);
+
+	    var bbox = tip.node().getBBox();
+	    rect.attr("width", bbox.width + 16)
+	        .attr("height", bbox.height + 12)
+					.attr("rx", 4)
+					.attr("ry", 4)
+	  });
+
+
+  var circles = node.append("circle")
+      .attr("r", function(d) {
+				if(d.nodeType == "skill")
+				 return (7 + (d.value*4)) ;
+				else
+				return d.value * 7;
+			 })
+      .attr("fill", function(d) {
+				if (d.nodeType == "skill")
+					return "white";
+				else if(d.inhouse == "Yup")
+					return "#d93737";
+				else
+				 	return "#feaf0e";
+			})
+			.attr('class', function(d) {
+				if(d.nodeType == "skill")
+					return "node-skill"
+				else
+					return "node-user"
+			})
+			.attr('stroke', function(d) {
+				if(d.inhouse == "Yup")
+					return "#fff";
+				else {
+					return "none";
+				}
+			})
+
+			// .attr('fill', function(d) {
+			//
+			// })
+      .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+  var lables = node.append("text")
+      .text(function(d) {
+        return d.id;
+      })
+      .attr('x', function(d) {
+				if (d.nodeType == "skill")
+					return ((d.value * 7)+6);
+				else
+				return 12;
+			})
+      .attr('y', function(d) {
+				if(d.nodeType == "skill")
+					return 7;
+				else
+					return 4;
+			})
+			.attr('fill', 'white')
+			.attr('class', 'text-label');
+
+  node.append("title")
+      .text(function(d) { return d.id; });
+
+  simulation
+      .nodes(graph.nodes)
+      .on("tick", ticked);
+
+  simulation.force("link")
+      .links(graph.links);
+
+	// simulation.linkDistance(200);
+
+  function ticked() {
+    link
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node
+        .attr("transform", function(d) {
+          return "translate(" + d.x + "," + d.y + ")";
+        })
+  }
+}
+</script>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	<script src="dist/js/bundle.js"></script>
 </body>
 </html>

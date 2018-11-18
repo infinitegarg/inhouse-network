@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
 html{
 	height: 100%;
 	width: 100%;
@@ -6,15 +8,125 @@ html{
 body{
 	min-height: 100%;
 	min-width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #cf4547;
-	color: #fff;
-	font: 100%/1.5 'Source Sans Pro', sans-serif;
+	font-family: 'Nunito', sans-serif;
+
 }
 
 *, *:after, *:before{
 	margin: 0;
 	padding: 0;
+}
+
+body {
+	background: #353742;
+	background-image: linear-gradient(-90deg, #7E19DC 4%, #E05E60 96%);
+	box-shadow: 0 129px 329px 0 rgba(0,0,0,0.20);
+}
+
+.text-label {
+	color: white;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.node-skill {
+	// opacity: .7
+}
+
+.logo {
+	display: flex;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	padding: 24px 32px;
+	height: 100px;
+	align-items: flex-start;
+	z-index: -1;
+	img.hacker {
+		width: 120px;
+	}
+	img.inno {
+		width: 140px;
+		padding-top: 16px;
+	}
+}
+//
+// .svg-container {
+// 	width: 100%;
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	right: 0;
+// }
+
+.svg-container {
+	position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+		z-index: 1;
+}
+
+.nodes circle {
+	cursor: pointer;
+}
+
+.guide {
+	position: absolute;
+	right: 0;
+	width: 16%;
+	    background: rgba(255,255,255,.2);
+	    border-radius: 12px;
+	    padding: 16px 22px;
+			margin-right: 32px;
+			margin-top: -24px;
+.heading {
+	font-size: 16px;
+	border-bottom: 1px solid rgba(255,255,255,.5);
+    padding-bottom: 8px;
+	text-align: center;
+}
+ div {
+	 color: white;
+ font-size: 14px;
+ }
+ img {
+	 width: 100%;
+	 margin-top: 24px;
+ }
+}
+
+.inno-employee {
+	border: 2px solid #ccc;
+}
+
+
+.cta {
+	.cta-heading {
+	font-size: 20px;
+	margin-bottom: 12px;
+	}
+	width: 18%;
+  margin-left: 32px;
+  color: white;
+  padding-top: 48px;
+	position: absolute;
+	z-index: 10;
+
+	a {
+		margin-top: 24px;
+		text-decoration: none;
+    font-size: 20px;
+    color: #7e19dc;
+    background: #fff;
+    display: inline-block;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 8px;
+		pointer: cursor;
+	}
 }

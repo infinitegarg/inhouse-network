@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    {"id": "Anant", "value": 1 , "learn": "Python", "knows": "UserExperience", "nodeType": ""},
+    {"id": "Varun", "value": 1 , "learn": "AI", "knows": "UserExperience", "nodeType":""},
+    {"id": "UserExperience","value": 3,"nodeType":"skill"},
+    {"id": "Ravi", "value": 1, "learn": "", "knows": "Python", "nodeType":"" },
+    {"id": "Python", "value": 2, "nodeType":"skill"},
+    {"id": "AI", "value": 2, "nodeType":"skill"}
+  ],
+  "links": [
+    {"source": "Anant", "target": "Python", "value": 1, "learn": true},
+    {"source": "Anant", "target": "UserExperience", "value": 1, "knows": true},
+    {"source": "Varun", "target": "UserExperience", "value": 1, "knows": true},
+    {"source": "Varun", "target": "AI", "value": 1, "learn": true },
+    {"source": "Ravi", "target": "Python", "value": 1, "knows": true}
+  ]
+}
