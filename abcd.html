@@ -110,8 +110,8 @@ var svg = d3.select("svg"),
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var simulation = d3.forceSimulation()
-		.force("link", d3.forceLink().distance(60).id(function(d) { return d.id; }))
-		.force("charge",d3.forceManyBody().strength(-1000).distanceMax(200)
+    .force("link", d3.forceLink().distance(20).id(function(d) { return d.id; }))
+    .force("charge",d3.forceManyBody().strength(-1000).distanceMax(200)
  .distanceMin(60))
     .force("center", d3.forceCenter(width / 2, height / 2));
 
